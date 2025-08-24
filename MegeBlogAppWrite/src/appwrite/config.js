@@ -99,6 +99,7 @@ export class Service{
       )
     } catch (error) {
       console.log(error);
+      return false
     }
   }
 
