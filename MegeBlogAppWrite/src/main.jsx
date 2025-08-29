@@ -5,12 +5,16 @@ import App from './App.jsx'
 import { Provider } from 'react-redux'
 import store from './store/store.js'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { AuthLayout } from './components/index.js';
+
 import Signup from './pages/Signup.jsx'
-import Login from './pages/Login.jsx'
+// import Login from './pages/Login.jsx'
 import AllPosts from './pages/AllPosts.jsx'
 import AddPost from './pages/AddPost.jsx'
 import EditPage from './pages/EditPost.jsx'
 import Post from './pages/Post.jsx'
+import Home from "./pages/Home.jsx"
+import Login from './pages/Login.jsx'
 
 const router = createBrowserRouter([
   {
@@ -24,44 +28,44 @@ const router = createBrowserRouter([
         {
             path: "/login",
             element: (
-                <Protected authentication={false}>
+                <AuthLayout authentication={false}>
                     <Login />
-                </Protected>
+                </AuthLayout>
             ),
         },
         {
             path: "/signup",
             element: (
-                <Protected authentication={false}>
+                <AuthLayout authentication={false}>
                     <Signup/>
-                </Protected>
+                </AuthLayout>
             ),
         },
         {
             path: "/all-posts",
             element: (
-                <Protected authentication>
+                <AuthLayout authentication>
                     {" "}
                     <AllPosts />
-                </Protected>
+                </AuthLayout>
             ),
         },
         {
             path: "/add-post",
             element: (
-                <Protected authentication>
+                <AuthLayout authentication>
                     {" "}
                     <AddPost />
-                </Protected>
+                </AuthLayout>
             ),
         },
         {
             path: "/edit-post/:slug",
             element: (
-                <Protected authentication>
+                <AuthLayout authentication>
                     {" "}
                     <EditPage/>
-                </Protected>
+                </AuthLayout>
             ),
         },
         {
