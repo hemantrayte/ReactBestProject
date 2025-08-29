@@ -14,19 +14,20 @@ export class Authservice {
   }
 
   async createAccount({ email, password, name }) {
-  try {
-    const userAccount = await this.account.create(ID.unique(), email, password, name);
-    if (userAccount) {
-      //call another method
-      this.login({ email, password });
-    } else {
-      return userAccount;
+    try {
+      const userAccount = await this.account.create(ID.unique(), email, password, name);
+      if (userAccount) {
+        // wait for login before returning
+        return await this.login({ email, password });
+      } else {
+        return userAccount;
+      }
+    } catch (error) {
+      console.error("Failed to create account:", error.message);
+      throw error;
     }
-  } catch (error) {
-    console.error("Failed to create account:", error.message);
-    throw error; // optional rethrow after logging
   }
-}
+  
 
 
   async login({ email, password }) {
@@ -40,12 +41,14 @@ export class Authservice {
 
   async getCurrentUser() {
     try {
-        return await this.account.get();
+      const user = await this.account.get();
+      return user;
     } catch (error) {
-        console.log("Appwrite serive :: getCurrentUser :: error", error);
+      console.log("Appwrite service :: getCurrentUser :: error", error);
+      return null; // ensure consistent return
     }
-    return null;
-}
+  }
+  
 
   async logout() {
     try {
